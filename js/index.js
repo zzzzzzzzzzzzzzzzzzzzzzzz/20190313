@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded',function () {
     var contentNode = document.querySelector('.content');
     var contentHeight = contentNode.offsetHeight;
     var nowIndex = 0;
+    var wheelTime=null;
 
 
     headerHandle();
@@ -42,45 +43,50 @@ window.addEventListener('DOMContentLoaded',function () {
     //内容部分
     contentHandle()
     function contentHandle(){
+
         document.onmousewheel = wheel;
         document.addEventListener('DomMouseScroll', wheel);
         function wheel(event) {
-            event = event || window.event;
+            clearTimeout(wheelTime);
+            wheelTime =setTimeout(function () {
+                event = event || window.event;
 
-            var flag = '';
-            if (event.wheelDelta) {
-                //ie/chrome
-                if (event.wheelDelta > 0) {
-                    flag = 'up';
-                } else {
-                    flag = 'down'
+                var flag = '';
+                if (event.wheelDelta) {
+                    //ie/chrome
+                    if (event.wheelDelta > 0) {
+                        flag = 'up';
+                    } else {
+                        flag = 'down'
+                    }
+                } else if (event.detail) {
+                    //firefox
+                    if (event.detail < 0) {
+                        flag = 'up';
+                    } else {
+                        flag = 'down'
+                    }
                 }
-            } else if (event.detail) {
-                //firefox
-                if (event.detail < 0) {
-                    flag = 'up';
-                } else {
-                    flag = 'down'
-                }
-            }
 
-            switch (flag) {
-                case 'up' :
-                    if (nowIndex > 0) {
-                        nowIndex--;
-                        move(nowIndex);
-                    }
-                    // console.log('up')
-                    // console.log(contentUlNode.style.top);
-                    break;
-                case 'down' :
-                    if (nowIndex < 4) {
-                        nowIndex++;
-                        move(nowIndex);
-                    }
-                    console.log('down');
-                    break;
-            }
+                switch (flag) {
+                    case 'up' :
+                        if (nowIndex > 0) {
+                            nowIndex--;
+                            move(nowIndex);
+                        }
+                        // console.log('up')
+                        // console.log(contentUlNode.style.top);
+                        break;
+                    case 'down' :
+                        if (nowIndex < 4) {
+                            nowIndex++;
+                            move(nowIndex);
+                        }
+                        console.log('down');
+                        break;
+                }
+            },200);
+
 
             //禁止默认行为
             event.preventDefault && event.preventDefault();
@@ -88,7 +94,11 @@ window.addEventListener('DOMContentLoaded',function () {
         }
     }
 
-
+    window.onresize=function () {
+        arrowNodes.style.left = headerListNodes[nowIndex].getBoundingClientRect().left + headerListNodes[nowIndex].offsetWidth / 2
+            - arrowNodes.offsetWidth / 2 + 'px';
+        contentUlNode.style.top = -nowIndex * contentHeight + 'px';
+    }
 })
 
 // }
