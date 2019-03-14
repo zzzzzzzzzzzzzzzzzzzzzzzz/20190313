@@ -1,39 +1,82 @@
-html,body{height: 100%;overflow: hidden;}
-html,body,h1,h2,h3,h4,h5,h6,p,ul,li{margin: 0px;padding: 0px;font: 14px "微软雅黑";}
-a{text-decoration: none;display: block;}
-li{list-style: none;}
-img{display: block;}
-.clearfix{*zoom: 1;}
-.clearfix:after{content: "";display: block;clear: both;}
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+html, body, h1, h2, h3, h4, h5, h6, p, ul, li {
+    margin: 0px;
+    padding: 0px;
+    font: 14px "微软雅黑";
+}
+
+a {
+    text-decoration: none;
+    display: block;
+}
+
+li {
+    list-style: none;
+}
+
+img {
+    display: block;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+#wrap {
+    height: 100%;
+    position: relative;
+}
+
+#header {
+    position: relative;
+}
+
 .headermain {
     width: 1100px;
     height: 80px;
     margin: 0 auto;
     background: pink;
+    /*position: relative;*/
 }
-.logo{
+
+.logo {
     margin-top: 15px;
     float: left;
 }
+
 .nav {
     margin-top: 50px;
     float: right;
 }
+
 .music-icon {
     float: left;
     margin-top: 50px;
 }
-.nav li{
+
+.nav li {
     float: left;
     margin-left: 40px;
     position: relative;
     /*color: #009EE0;*/
 }
-.up{
-    color:#009EE0;
+
+.up {
+    color: #009EE0;
 }
-.down{
-    color:#000;
+
+.down {
+    color: #000;
     position: absolute;
     left: 0;
     top: 0;
@@ -41,6 +84,93 @@ img{display: block;}
     overflow: hidden;
     transition: width 1s;
 }
+
 .nav li:hover .down {
     width: 100%;
 }
+
+.arrow {
+    width: 21px;
+    height: 11px;
+    background: url("../imgs/arrow.png") no-repeat;
+    position: absolute;
+    bottom: -11px;
+    left: 50%;
+    transition: left 1s;
+    z-index: 1;
+}
+
+.content {
+    position: absolute;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: hotpink;
+    overflow: hidden;
+}
+
+.content_main {
+    height: 500%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    /*width: 1100px;*/
+    width: 100%;
+    transition: top 1s;
+    /*background: #009EE0;*/
+}
+
+.content_main > li {
+    height: 20%;
+    background: antiquewhite;
+    position: relative;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}
+
+.content_main section {
+    width: 1100px;
+    height: 520px;
+    background: hotpink;
+    /*margin: 0 auto;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /*margin-top: -260px;*/
+    /*margin-left: -550px;*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
