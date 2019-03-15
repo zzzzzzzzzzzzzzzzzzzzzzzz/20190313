@@ -45,50 +45,50 @@ window.addEventListener('DOMContentLoaded', function () {
     contentHandle()
 
     function contentHandle() {
-
+        var lastTime = 0;
         document.onmousewheel = wheel;
         document.addEventListener('DomMouseScroll', wheel);
 
         function wheel(event) {
-            clearTimeout(wheelTime);
-            wheelTime = setTimeout(function () {
-                event = event || window.event;
+            var nowTime = Date.now();
+            if (nowTime - lastTime <= 1500) return;
+            lastTime = nowTime;
+            event = event || window.event;
 
-                var flag = '';
-                if (event.wheelDelta) {
-                    //ie/chrome
-                    if (event.wheelDelta > 0) {
-                        flag = 'up';
-                    } else {
-                        flag = 'down'
-                    }
-                } else if (event.detail) {
-                    //firefox
-                    if (event.detail < 0) {
-                        flag = 'up';
-                    } else {
-                        flag = 'down'
-                    }
+            var flag = '';
+            if (event.wheelDelta) {
+                //ie/chrome
+                if (event.wheelDelta > 0) {
+                    flag = 'up';
+                } else {
+                    flag = 'down'
                 }
+            } else if (event.detail) {
+                //firefox
+                if (event.detail < 0) {
+                    flag = 'up';
+                } else {
+                    flag = 'down'
+                }
+            }
 
-                switch (flag) {
-                    case 'up' :
-                        if (nowIndex > 0) {
-                            nowIndex--;
-                            move(nowIndex);
-                        }
-                        // console.log('up')
-                        // console.log(contentUlNode.style.top);
-                        break;
-                    case 'down' :
-                        if (nowIndex < 4) {
-                            nowIndex++;
-                            move(nowIndex);
-                        }
-                        console.log('down');
-                        break;
-                }
-            }, 100);
+            switch (flag) {
+                case 'up' :
+                    if (nowIndex > 0) {
+                        nowIndex--;
+                        move(nowIndex);
+                    }
+                    // console.log('up')
+                    // console.log(contentUlNode.style.top);
+                    break;
+                case 'down' :
+                    if (nowIndex < 4) {
+                        nowIndex++;
+                        move(nowIndex);
+                    }
+                    console.log('down');
+                    break;
+            }
 
 
             //禁止默认行为
@@ -110,8 +110,11 @@ window.addEventListener('DOMContentLoaded', function () {
         // console.log('111');
         var homeCarouselNodes = document.querySelectorAll('.home_carousel li');
         var homePointNodes = document.querySelectorAll('.home_point li');
+        var homeNode=document.querySelector('.home');
         var lastIndex = 0;
         var nowIndex = 0;
+        var lastTime = 0;
+        var timer=null;
         // console.log(lastIndex);
         // console.log(nowIndex);
         // console.log(homePointNodes);
@@ -120,7 +123,10 @@ window.addEventListener('DOMContentLoaded', function () {
             homePointNodes[i].index = i;
             // console.log('111');
             homePointNodes[i].onclick = function () {
-                // console.log('2222');
+                // console.log(Date.now());
+                var nowTime = Date.now();
+                if (nowTime - lastTime <= 2000) return;
+                lastTime = nowTime;
                 nowIndex = this.index;
                 console.log(nowIndex);
                 if (nowIndex === lastIndex) return;
@@ -135,13 +141,37 @@ window.addEventListener('DOMContentLoaded', function () {
                     homeCarouselNodes[nowIndex].className = 'common-title left-Show';
                     homeCarouselNodes[lastIndex].className = 'common-title right-Hidden';
                 }
-                homePointNodes[lastIndex].className='';
-                this.className='active';
+                homePointNodes[lastIndex].className = '';
+                this.className = 'active';
                 lastIndex = nowIndex;
             }
         }
+
+        homeNode.onmouseenter=function(){
+            clearInterval(timer);
+        }
+        homeNode.onmouseleave=function(){
+            autoPlay();
+        }
+
+        // 第一屏定时器
+        autoPlay();
+        function autoPlay(){
+            timer= setInterval(function () {
+                nowIndex++;
+                if (nowIndex >= 4) nowIndex=0;
+                homeCarouselNodes[nowIndex].className = 'common-title right-Show';
+                homeCarouselNodes[lastIndex].className = 'common-title left-Hidden';
+
+                homePointNodes[lastIndex].className = '';
+                homePointNodes[nowIndex].className = 'active';
+                lastIndex = nowIndex;
+            }, 2500);
+        }
+
+
     }
 })
 
-// }
+
 
