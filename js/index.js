@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', function () {
             - arrowNodes.offsetWidth / 2 + 'px';
         contentUlNode.style.top = -nowIndex * contentHeight + 'px';
     }
-    move(1);
+    move(2);
 
     //内容部分
     contentHandle()
